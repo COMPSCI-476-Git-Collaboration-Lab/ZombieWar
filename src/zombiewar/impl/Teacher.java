@@ -10,13 +10,10 @@ public class Teacher extends Character implements ISurvivor{
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
+	//@Override
 	public void attack(IZombie zombie) {
 		// TODO Auto-generated method stub
 		zombie.decreaseHealth(8);
 		
 	}
-	
-	
-
 }
