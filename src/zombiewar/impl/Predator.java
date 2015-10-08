@@ -25,7 +25,7 @@ public class Predator extends Character implements IZombie{
 	 */
 	//@Override
 	public void attack(ISurvivor survivor) {
-	    survivor.decreaseHealth(10)
+	    survivor.decreaseHealth(10);
 	}
 	
 }

@@ -5,10 +5,11 @@ import zombiewar.intf.ISurvivor;
 import zombiewar.intf.IZombie;
 
 /**
- * A soldier is one of the strongest survivor because he wears armor 
- * and carries a weapon.
  * 
- * @author thaoc
+ * 
+ * A student is almost worthless but not quite yet
+ * 
+ * @author Sam
  */
 public class Student extends Character implements ISurvivor{
 
