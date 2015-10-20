@@ -28,11 +28,13 @@ public class Main {
     return zombies;
   }
 
+
+//changing multiplication in here to modulus -K
   public static ISurvivor[] randomSurvivors() {
-    int numZombies = (int) (Math.random() * 20);
+    int numZombies = (int) (Math.random() % 20);
     ISurvivor[] survivors = new ISurvivor[numZombies];
     for (int i = 0; i < survivors.length; i++) {
-      int type = (int) (Math.random() * 3);
+      int type = (int) (Math.random() % 3);
       switch(type){
         case 0: survivors[i] = (ISurvivor) factory.make("solider"); break;
         case 1: survivors[i] = (ISurvivor) factory.make("teacher"); break;
@@ -69,7 +71,61 @@ public class Main {
     //      all the zombies are all dead or all the survivors are all dead.
     
 
-    
+//Begin attacking thingers -K
+
+/* The idea here is that we loop through each survivor and assign a zombie
+target for each one. We randomly pick a zombie by rolling the zombie
+array until we find a living one or all the zombies are dead.
+
+Do same for zombies. Hypothetically, we could make this its own function
+as combat(attackers[], targets[]). 
+
+ */
+bool loopflag = 0;
+int nexttarget = -1;
+//int dead = 0; 
+
+while (allDead(survivors) == 0 && allDead(zombies) == 0)
+    {
+	for (int k = 0; k < survivors.length; k++)
+	{
+	    loopflag = 0;
+	    while ((loopflag == 0) && (allDead(zombies) == 0))
+		{
+		nexttarget = Math.random() % zombies.length;
+		if (zombies[nexttarget].isAlive() == 1)
+		    loopflag = 1;
+		} //end zombie target assignment loop
+
+	    //bust outta attacking if the zombeners got ded
+	    if (allDead(zombies) == 0)
+		break;
+
+	    //Otherwise do glorious combat before Valhalla
+		if (survivors[k].isAlive() == true)
+		    survivors[k].attack(zombies[nexttarget]);
+	}//End human combat
+
+	for (int q = 0; q < zombies.length; q++)
+	    { //begin zombie combat
+	    loopflag = 0;
+	    while ((loopflag == 0) && (allDead(survivors) == 0))
+		{
+		nexttarget = Math.random() % survivors.length;
+		if (survivors[nexttarget].isAlive() == 1)
+		    loopflag = 1;
+		} //end human target assignment loop
+
+	    //If the meat is sufficiently pulverized, done
+	    if (allDead(survivors) == 0)
+		break;
+
+	    //Otherwise present the meats before the zombeners
+		if (zombies[q].isAlive() == true)
+		    zombies[q].attack(survivors[nexttarget]);
+	}//End zombie combat
+    }	
+
 
     if (allDead(survivors)) {
       System.out.println("None of the survivors made it.");
